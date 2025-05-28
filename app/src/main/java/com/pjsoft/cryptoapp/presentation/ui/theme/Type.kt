@@ -70,7 +70,7 @@ val poppinsTypo = Typography(
         lineHeight = 40.sp
     ),
     headlineMedium = TextStyle(
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Bold,
         fontFamily = poppinsFontFamily,
         fontSize = 28.sp,
         lineHeight = 36.sp
