@@ -1,4 +1,4 @@
-package com.pjsoft.cryptoapp.presentation.screens
+package com.pjsoft.cryptoapp.presentation.screens.auth
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -28,21 +28,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.pjsoft.cryptoapp.R
 import com.pjsoft.cryptoapp.presentation.components.Lock
 import com.pjsoft.cryptoapp.presentation.components.Visibility
 import com.pjsoft.cryptoapp.presentation.components.Visibility_off
+import com.pjsoft.cryptoapp.presentation.navigation.LoginScreenRoute
+import com.pjsoft.cryptoapp.presentation.navigation.MainScreenRoute
+import com.pjsoft.cryptoapp.presentation.navigation.RegisterScreenRoute
 import com.pjsoft.cryptoapp.presentation.ui.theme.CryptoAppTheme
 
 @Composable
-fun LoginScreen(){
-
+fun LoginScreen(navController: NavController){
 
     var password by remember {
         mutableStateOf("")
@@ -68,7 +75,7 @@ fun LoginScreen(){
             fontWeight = FontWeight.Bold,
             letterSpacing = 3.sp
         )
-        // Imagen
+        // Imagen HStack
         Image(
             painter = painterResource(R.drawable.crypto1),
             contentDescription = "login",
@@ -120,10 +127,17 @@ fun LoginScreen(){
             if(isPasswordVisible) VisualTransformation.None
             else PasswordVisualTransformation()
         )
-        //Boton iniciar sesion
+        //Boton iniciar sesion localstorage
         Button(
-            onClick = {  },
-            modifier = Modifier.fillMaxWidth().height(40.dp)
+            onClick = {
+                navController.navigate(MainScreenRoute){
+                    popUpTo(LoginScreenRoute){ inclusive = true }
+                }
+            },
+            modifier = Modifier
+                .padding(bottom = 20.dp)
+                .fillMaxWidth()
+                .height(40.dp)
         ) {
             Text(
                 text = "Iniciar sesion"
@@ -131,7 +145,21 @@ fun LoginScreen(){
         }
         //Texto de crear cuenta
         Text(
-            text = "¿No tienes una cuenta? Crea una"
+            text = buildAnnotatedString {
+                withStyle(style = SpanStyle(MaterialTheme.colorScheme.onBackground)){
+                    append("¿No tienes una cuenta? ")
+                }
+                pushStyle(
+                    SpanStyle(
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+                append("Crea una")
+            },
+            modifier = Modifier.clickable {
+                navController.navigate(RegisterScreenRoute)
+            }
         )
     }
 }
@@ -140,6 +168,6 @@ fun LoginScreen(){
 @Preview
 fun LoginScreenPreview(){
     CryptoAppTheme {
-        LoginScreen()
+        LoginScreen(navController = rememberNavController())
     }
 }
