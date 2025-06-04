@@ -37,24 +37,29 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.pjsoft.cryptoapp.R
 import com.pjsoft.cryptoapp.presentation.components.Lock
 import com.pjsoft.cryptoapp.presentation.components.Visibility
 import com.pjsoft.cryptoapp.presentation.components.Visibility_off
-import com.pjsoft.cryptoapp.presentation.navigation.LoginScreenRoute
-import com.pjsoft.cryptoapp.presentation.navigation.MainScreenRoute
-import com.pjsoft.cryptoapp.presentation.navigation.RegisterScreenRoute
+import com.pjsoft.cryptoapp.presentation.navigation.Screens
 import com.pjsoft.cryptoapp.presentation.ui.theme.CryptoAppTheme
+import com.pjsoft.cryptoapp.presentation.viewmodels.AuthViewModel
+import com.pjsoft.cryptoapp.presentation.viewmodels.OtroTestingViewModel
+import com.pjsoft.cryptoapp.presentation.viewmodels.TestingViewModel
 
 @Composable
 fun LoginScreen(navController: NavController){
 
+    val viewModel : AuthViewModel = hiltViewModel()
+    var email by remember{
+        mutableStateOf("")
+    }
     var password by remember {
         mutableStateOf("")
     }
-
     var isPasswordVisible by remember {
         mutableStateOf(false)
     }
@@ -84,8 +89,8 @@ fun LoginScreen(navController: NavController){
         )
         //Textfield Correo
         OutlinedTextField(
-            value = "",
-            onValueChange = {  },
+            value = email,
+            onValueChange = { email = it  },
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Default.Email,
@@ -130,9 +135,13 @@ fun LoginScreen(navController: NavController){
         //Boton iniciar sesion localstorage
         Button(
             onClick = {
-                navController.navigate(MainScreenRoute){
-                    popUpTo(LoginScreenRoute){ inclusive = true }
-                }
+//                navController.navigate(Screens.MainScreenRoute){
+//                    popUpTo(Screens.LoginScreenRoute){ inclusive = true }
+//                }
+                viewModel.login(
+                    email = email,
+                    password = password
+                )
             },
             modifier = Modifier
                 .padding(bottom = 20.dp)
@@ -158,7 +167,7 @@ fun LoginScreen(navController: NavController){
                 append("Crea una")
             },
             modifier = Modifier.clickable {
-                navController.navigate(RegisterScreenRoute)
+                navController.navigate(Screens.RegisterScreenRoute)
             }
         )
     }

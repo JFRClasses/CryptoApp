@@ -8,22 +8,20 @@ sealed class Screens(){
     object LoginScreenRoute : Screens()
 
     @Serializable
-    object RegisterScreenRoute
+    object RegisterScreenRoute : Screens()
 
     @Serializable
-    object MainScreenRoute
+    object MainScreenRoute : Screens()
 
     @Serializable
-    object MainGraph
+    object MainGraph : Screens()
 
     @Serializable
-    object HomeScreenRoute :
+    object HomeScreenRoute : Screens()
 
     @Serializable
-    object StatsScreenRoute
+    object StatsScreenRoute : Screens()
 }
-
-
 
 
 enum class Screen {

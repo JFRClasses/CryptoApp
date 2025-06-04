@@ -41,7 +41,7 @@ class Computer(val procesador: Procesador, val mb: MotherBoard, val storage: ISt
         println("Encendiendo")
     }
 }
-// Dagger Hilt
+// Dagger Hilt MVVM Retrofit SERVICES
 fun main(){
     val computer = Computer(
         procesador = Procesador(marca = "Intel", transistores = Transistores(n = 1000)),

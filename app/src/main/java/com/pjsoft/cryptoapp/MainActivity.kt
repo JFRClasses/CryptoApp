@@ -10,15 +10,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.pjsoft.cryptoapp.presentation.navigation.LoginScreenRoute
-import com.pjsoft.cryptoapp.presentation.navigation.MainGraph
-import com.pjsoft.cryptoapp.presentation.navigation.MainScreenRoute
-import com.pjsoft.cryptoapp.presentation.navigation.RegisterScreenRoute
+import com.pjsoft.cryptoapp.presentation.navigation.Screens
 import com.pjsoft.cryptoapp.presentation.screens.auth.LoginScreen
 import com.pjsoft.cryptoapp.presentation.screens.auth.RegisterScreen
 import com.pjsoft.cryptoapp.presentation.screens.main.MainScreen
 import com.pjsoft.cryptoapp.presentation.ui.theme.CryptoAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,15 +25,15 @@ class MainActivity : ComponentActivity() {
         setContent {
             CryptoAppTheme {
                 val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = LoginScreenRoute){
-                    composable<LoginScreenRoute> {
+                NavHost(navController = navController, startDestination = Screens.LoginScreenRoute){
+                    composable<Screens.LoginScreenRoute> {
                         LoginScreen(navController = navController)
                     }
-                    composable<RegisterScreenRoute> {
-                        RegisterScreen(innerPadding = PaddingValues(20.dp))
+                    composable<Screens.RegisterScreenRoute> {
+                        RegisterScreen(innerPadding = PaddingValues(20.dp), navController = navController)
                     }
-                    navigation<MainGraph>(startDestination = MainScreenRoute){
-                        composable<MainScreenRoute> {
+                    navigation<Screens.MainGraph>(startDestination = Screens.MainScreenRoute){
+                        composable<Screens.MainScreenRoute> {
                             MainScreen()
                         }
                     }
