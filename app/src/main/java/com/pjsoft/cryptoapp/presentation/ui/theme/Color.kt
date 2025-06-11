@@ -23,6 +23,6 @@ val MediumGray = Color(0xFF90A4AE)
 val LightGray = Color(0xFFCFD8DC)
 
 val WarmWhite = Color(0xFFFAFAFA)
-val LightSurface = Color(0xFFFFFFFF)
+val LightSurface = Color(0xFFEFEFEF)
 val SoftBlue = Color(0xFFE3F2FD)
 val SoftTextDark = Color(0xFF263238)

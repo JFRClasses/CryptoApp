@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Button
@@ -33,10 +35,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.pjsoft.cryptoapp.R
+import com.pjsoft.cryptoapp.domain.models.Transaction
+import com.pjsoft.cryptoapp.presentation.components.TransactionItem
 import com.pjsoft.cryptoapp.presentation.ui.theme.CryptoAppTheme
 
 @Composable
 fun HomeScreen(innerPadding : PaddingValues){
+    val latestTransactions = listOf(
+        Transaction(id = 1, userId = 101, amount = 0.05, date = "2025-06-10", type = 1),
+        Transaction(id = 2, userId = 102, amount = 0.02, date = "2025-06-09", type = 0),
+        Transaction(id = 3, userId = 103, amount = 0.1, date = "2025-06-08", type = 1),
+        Transaction(id = 4, userId = 104, amount = 0.03, date = "2025-06-07", type = 0),
+        Transaction(id = 5, userId = 105, amount = 0.07, date = "2025-06-06", type = 1)
+    )
     Column(
         modifier = Modifier
             .background(
@@ -109,8 +120,10 @@ fun HomeScreen(innerPadding : PaddingValues){
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp),
+            elevation = CardDefaults.elevatedCardElevation(defaultElevation = 10.dp),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primary
+                containerColor = MaterialTheme.colorScheme.primary,
+
             )
         ) {
             Column(
@@ -156,6 +169,34 @@ fun HomeScreen(innerPadding : PaddingValues){
                     .height(50.dp)
             ) {
                 Text(text = "Retirar")
+            }
+        }
+
+        // Ultimos movimientos
+        Row(
+            modifier = Modifier.fillMaxWidth()
+                .padding(top = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "Ultimos movimientos",
+                style = MaterialTheme.typography.titleMedium
+            )
+            Text(
+                text = "Ver todos",
+                color = MaterialTheme.colorScheme.primary
+            )
+        }
+        // Ultimos movimientos lista
+        LazyColumn(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            items(latestTransactions){
+                TransactionItem(
+                    amount = it.amount,
+                    date = it.date,
+                    type = it.type
+                )
             }
         }
     }
